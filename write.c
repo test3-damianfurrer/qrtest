@@ -4,17 +4,23 @@
 
 int main(int argc, char ** argv){
     FILE *fptr;
-    char *initfname="test.txt";
+    char *initinitfname="test.txt";
+    char *initfname;
     char *fname;
     int fnamelen;
     int filenumber=0;
     char c;
     printf("argc: %d\n",argc);
 
+    initfname = (char*) calloc (MAX_PATH,sizeof(char));
     fname = (char*) calloc (MAX_PATH,sizeof(char));
 
     if (argc>1)
-        initfname=argv[1];
+        initinitfname=argv[1];
+
+    for(fnamelen=0;initinitfname[fnamelen];fnamelen++){
+      	initfname[fnamelen]=initinitfname[fnamelen];
+    }
 
     c=getc(stdin);
     int ind;
@@ -22,8 +28,9 @@ int main(int argc, char ** argv){
         ind=filenumber%10;
         switch (ind) {
         case 0:
-            for(fnamelen=0;initfname[fnamelen];fnamelen++)
-        	fname[fnamelen]=initfname[fnamelen];
+            for(int i=0;initfname[i];i++)
+        	fname[i]=initfname[i];
+	    fname[fnamelen]='0';
         break;
         case 1:
             fname[fnamelen]='1';
@@ -65,4 +72,6 @@ int main(int argc, char ** argv){
         fclose(fptr);
         filenumber++;
     }
+    free(fname);
+    free(initfname);
 }
